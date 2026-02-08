@@ -1,5 +1,6 @@
 const Header = () => {
 
+    console.log("Header 컴포넌트 랜더링 되었습니다");
     return (
         <header style={{ backgroundColor: '#282c34', padding: '1rem', color: 'white' }} >
             <nav>

@@ -4,6 +4,7 @@ interface ContentProps {
 
 const Content = ({children}: ContentProps) => {
 
+    console.log("Content 컴포넌트 랜더링 되었습니다");
     return (
         <main style={{ 
             flex: 1,               // 컨텐츠가 적어도 풋터가 바닥에 있게 만듦

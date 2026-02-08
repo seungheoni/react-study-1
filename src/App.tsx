@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 import Layout from './components/Layout'
+import ColorButtons from './components/ColorButtons';
+import LocalCounter from './components/LocalCounter';
 
 function App() {
 
@@ -12,10 +14,8 @@ function App() {
       <section>
         <h1>반갑습니다!</h1>
         <p>이곳이 메인 컨텐츠 영역입니다.</p>
-        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '20px' }}>
-            <button onClick={() => setBgColor('#f2e055')} style={btnStyle}>노란색</button>
-            <button onClick={() => setBgColor('#bd5720')} style={btnStyle}>갈색</button>
-        </div>
+        <ColorButtons onChangeColor={setBgColor} />
+        <LocalCounter />
       </section>
     </Layout>
   )
