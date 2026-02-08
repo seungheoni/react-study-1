@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 import Layout from './components/Layout'
 import ColorButtons from './components/ColorButtons';
@@ -9,6 +9,8 @@ function App() {
   const [bgColor, setBgColor] = useState("#e5e6e1");
 
   const [showCounter, setShowCounter] = useState(true);
+
+  const [count, setCount] = useState(0);
 
   {/* [구현1] 첫 페이지 로드시 실행 */}
   useEffect (() => {
@@ -28,11 +30,32 @@ function App() {
     // localStorage.setItem('themeColor', bgColor);
   }, [bgColor]); // 👈 중요: 리액트에게 bgColor를 감시하라고 명령함!
 
+
+// [추가 로직] 색상 이름을 분석하는 무거운 함수
+const getColorName = (hex: string) => {
+  console.log("🤔 색상 이름을 분석하는 중... (매우 무거운 작업)");
+  if (hex === "#f2e055") return "노란색";
+  if (hex === "#bd5720") return "갈색";
+  if (hex === "#3b82f6") return "시원한 블루";
+  if (hex === "#22c55e") return "싱그러운 그린";
+  return "새로운 색상";
+};
+
+//const colorName = getColorName(bgColor); // 리렌더링마다 무조건 실행됨
+
+// [useMemo 적용] 
+// bgColor가 변할 때만 위 함수를 실행해서 colorName을 업데이트합니다.
+const colorName = useMemo(() => {
+  return getColorName(bgColor);
+}, [bgColor]);
+
   return (
     <Layout subject="내 프로필 설정" bgColor={bgColor}>
       {/* 여기서 작성하는 태그들이 Content의 children으로 전달됩니다 */}
       <section>
         <h1>반갑습니다!</h1>
+        {/* 분석된 색상 이름을 화면에 표시 */}
+        <p>현재 테마는 <strong>{colorName}</strong>입니다.</p>
         <p>이곳이 메인 컨텐츠 영역입니다.</p>
 
         {/* [3단계 확인용 버튼 추가] */}
@@ -46,7 +69,7 @@ function App() {
         </div>
 
         <ColorButtons onChangeColor={setBgColor} />
-        {showCounter && <LocalCounter />}
+        {showCounter && <LocalCounter count={count} setCount={setCount} />}
       </section>
     </Layout>
   )
